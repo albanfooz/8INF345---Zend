@@ -1,0 +1,59 @@
+<?= $this->doctype() ?>
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <?= $this->headTitle('Laboratoire 3 - The Products Website')->setSeparator(' - ')->setAutoEscape(false) ?>
+
+        <?= $this->headMeta()
+            ->appendName('viewport', 'width=device-width, initial-scale=1.0')
+            ->appendHttpEquiv('X-UA-Compatible', 'IE=edge')
+        ?>
+
+        <!-- Le styles -->
+        <?= $this->headLink(['rel' => 'shortcut icon', 'type' => 'image/png', 'href' => $this->basePath() . '/img/favicon.png']) // !??? why o why?
+            ->prependStylesheet($this->basePath('css/style.css'))
+            ->prependStylesheet($this->basePath('css/bootstrap-theme.min.css'))
+            ->prependStylesheet($this->basePath('css/bootstrap.min.css'))
+            ->prependStylesheet($this->basePath('css/home.css'))
+        ?>
+
+        <!-- Scripts -->
+        <?= $this->headScript()
+            ->prependFile($this->basePath('js/bootstrap.min.js'))
+            ->prependFile($this->basePath('js/jquery-3.1.0.min.js'))
+        ?>
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+        rel="stylesheet">
+    </head>
+    <body>
+        <!-- Navigation -->
+        <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+        <a id="home" class="navbar-brand" href="#" routerLink="/home" routerLinkActive="active">THE PRODUCTS WEBSITE</a>
+
+        <ul class="navbar-nav">
+            <li *ngIf="!isLoggedIn()" class="nav-item" id="panierNav">
+                <a class="nav-link" href="#" routerLink="/panier" routerLinkActive="active"><i class="material-icons">shopping_cart</i>Panier
+                </a>
+            </li>
+            <li *ngIf="!isLoggedIn()" class="nav-item" id="connectionNav">
+                <a routerLink="/login" routerLinkActive="active" class="nav-link" href="#"><i class="material-icons">account_box</i>Connexion</a>
+            </li>
+            <li *ngIf="isLoggedIn()" class="nav-item" id="adminNav">
+                <a routerLink="/admin" routerLinkActive="active" class="nav-link" href="#"><i class="material-icons">settings</i>Admin</a>
+            </li>
+            <li *ngIf="isLoggedIn()" class="nav-item" id="disconectionNav">
+                <a class="nav-link" href="#"><i class="material-icons">account_box</i>Deconnexion</a>
+            </li>
+        </ul>
+    </nav>
+        <div class="container">
+            <?= $this->content ?>
+            <hr>
+            <footer>
+                <p>&copy; <?= date('Y') ?> by Axel Houlès - Alban Fourfooz. All rights reserved, JK.</p>
+            </footer>
+        </div>
+        <?= $this->inlineScript() ?>
+    </body>
+</html>
