@@ -37,6 +37,9 @@ class AuctionTable {
     }
 
     public function getAllCartProducts ($ids) {
+        // si aucun id le panier est vide alors on renvoi un array vide
+        if (sizeof($ids) == 0)
+            return array();
         $where = new Where();
         $where->in('id', $ids);
 

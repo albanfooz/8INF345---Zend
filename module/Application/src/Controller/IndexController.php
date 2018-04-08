@@ -219,6 +219,40 @@ class IndexController extends AbstractActionController
             ));
         }
     }
+
+    public function paycartAction()
+    {
+
+
+        $form = new AuctionEditForm(new Product());
+
+        $success = rand(0, 1);
+        if ($this->getRequest()->isPost()) {
+            if ($success) {
+                $this->_cartTable->payCart();
+            } else {
+                echo 'mdr fail';
+            }
+
+        }
+
+        return new ViewModel(array(
+            'success' => $success,
+            'orderId' => $this->generateOrderId(),
+            'form' => $form
+        ));
+
+    }
+
+    function generateOrderId($length = 10) {
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $charactersLength = strlen($characters);
+        $randomString = '';
+        for ($i = 0; $i < $length; $i++) {
+            $randomString .= $characters[rand(0, $charactersLength - 1)];
+        }
+        return $randomString;
+    }
 }
 
 ?>

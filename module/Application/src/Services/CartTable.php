@@ -39,5 +39,10 @@ class CartTable {
     public function delete (CartItem $toDelete) {
         return $this->_tableGateway->delete(['idProduct' => $toDelete->_idProduct, 'username' => $toDelete->_username]);
     }
+
+    public function payCart () {
+        // on vide le panier
+        return $this->_tableGateway->delete(['username' => $_SESSION['username']]);
+    }
 }
 ?>

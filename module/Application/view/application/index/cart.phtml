@@ -3,8 +3,12 @@
 
 <main>
     <h1>Votre panier</h1>
-    <td><a class="cursor-ptr" href="<?= $this->url('index',['action'=> 'create']) ?>">Payer</a></td>
-
+    <form action="/paycart" method="post">
+        <div>
+            <input type="hidden" name="id" value="<?php echo (int) $product->_id; ?>" />
+            <input type="submit" name="pay" value="Payer" />
+        </div>
+    </form>
     <table class="datatable">
         <thead>
         <tr>
@@ -16,7 +20,9 @@
         </tr>
         </thead>
         <tbody>
-        <?php foreach ($products as $a) : ?>
+        <?php $total = 0;
+        foreach ($products as $a) :
+            $total += $a->_price?>
             <tr>
                 <td><?= $this->escapeHtml($a->_id) ?></td>
                 <td><?= $this->escapeHtml($a->_name) ?></td>
@@ -25,7 +31,9 @@
                 <td><a class="cursor-ptr" href="<?= $this->url('index',['action'=> 'removefromcart','id' => $a->_id]) ?>">Retirer</a></td>
 
             </tr>
-        <?php endforeach; ?>
+        <?php endforeach;
+            echo '<br/> Prix total HT : ' . $total .'<br/> Prix total avec taxes : ' . ($total + $total * 0.15);
+        ?>
         </tbody>
     </table>
 </main>

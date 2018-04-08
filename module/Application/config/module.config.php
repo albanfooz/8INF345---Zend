@@ -54,7 +54,7 @@ return [
         ],
         'controllers' => [
             Controller\IndexController::class => [
-                ['actions' => ['index', 'edit', 'delete', 'create', 'addtocart', 'cart', 'removefromcart'], 'allow' => '*'],
+                ['actions' => ['index', 'edit', 'delete', 'create', 'addtocart', 'cart', 'removefromcart', 'paycart'], 'allow' => '*'],
                 ['actions' => ['index'], 'allow' => '*'],
                 ['actions' => ['addtocart'], 'allow' => '*'],
                 ['actions' => ['removefromcart'], 'allow' => '*'],
@@ -62,7 +62,8 @@ return [
                 ['actions' => ['admin'], 'allow' => '@'],
                 ['actions' => ['edit'], 'allow' => '@'],
                 ['actions' => ['delete'], 'allow' => '@'],
-                ['actions' => ['create'], 'allow' => '@']
+                ['actions' => ['create'], 'allow' => '@'],
+                ['actions' => ['paycart'], 'allow' => '*']
 
 
             ],
