@@ -3,7 +3,8 @@ namespace Application\Services;
 
 use Zend\Db\TableGateway\TableGatewayInterface;  
 use Application\Model\Product;
-
+use Zend\Db\Sql\Sql;
+use Zend\Db\Sql\Where;
 class AuctionTable {
     protected $_tableGateway;
 
@@ -33,6 +34,19 @@ class AuctionTable {
 
     public function delete (Product $toDelete) {
         return $this->_tableGateway->delete(['id' => $toDelete->_id]);
+    }
+
+    public function getAllCartProducts ($ids) {
+        $where = new Where();
+        $where->in('id', $ids);
+
+        $resultSet = $this->_tableGateway->select($where);
+        $return = array();
+        $ll = 'l';
+        foreach( $resultSet as $r ) {
+            $return[]=$r;
+        }
+        return $return;
     }
 }
 ?>

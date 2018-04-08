@@ -7,7 +7,7 @@ use Zend\Session\SessionManager;
 use Zend\Authentication\Storage\Session as SessionStorage;
 use Interop\Container\ContainerInterface;
 use Zend\Db\Adapter\AdapterInterface;
-use Application\Model\Product;
+use Application\Model\CartItem;
 use Zend\Db\ResultSet\ResultSet;
 use Zend\Db\TableGateway\TableGateway;
 use Zend\ModuleManager\Feature\ConfigProviderInterface;
@@ -26,7 +26,7 @@ class CartTableGatewayFactory implements FactoryInterface
     {
         $dbAdapter = $container->get(AdapterInterface::class);
         $resultSetPrototype = new ResultSet();
-        $resultSetPrototype->setArrayObjectPrototype(new Product());
+        $resultSetPrototype->setArrayObjectPrototype(new CartItem());
         return new TableGateway('cart', $dbAdapter, null, $resultSetPrototype);
     }
 }

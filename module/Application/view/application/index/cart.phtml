@@ -1,0 +1,31 @@
+<header>
+</header>
+
+<main>
+    <h1>Votre panier</h1>
+    <td><a class="cursor-ptr" href="<?= $this->url('index',['action'=> 'create']) ?>">Payer</a></td>
+
+    <table class="datatable">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Nom</th>
+            <th>Prix</th>
+            <th>Description</th>
+            <th>&nbsp;</th>
+        </tr>
+        </thead>
+        <tbody>
+        <?php foreach ($products as $a) : ?>
+            <tr>
+                <td><?= $this->escapeHtml($a->_id) ?></td>
+                <td><?= $this->escapeHtml($a->_name) ?></td>
+                <td><?= $this->escapeHtml($a->_price) ?></td>
+                <td><?= $this->escapeHtml($a->_description) ?></td>
+                <td><a class="cursor-ptr" href="<?= $this->url('index',['action'=> 'removefromcart','id' => $a->_id]) ?>">Retirer</a></td>
+
+            </tr>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
+</main>
