@@ -3,7 +3,7 @@
 
 <main>
     <h1>Votre panier</h1>
-    <form action="/paycart" method="post">
+    <form action="<?= $this->url('cart',['action'=> 'paycart']) ?>" method="post">
         <div>
             <input type="hidden" name="id" value="<?php echo (int) $product->_id; ?>" />
             <input type="submit" name="pay" value="Payer" />
@@ -28,7 +28,7 @@
                 <td><?= $this->escapeHtml($a->_name) ?></td>
                 <td><?= $this->escapeHtml($a->_price) ?></td>
                 <td><?= $this->escapeHtml($a->_description) ?></td>
-                <td><a class="cursor-ptr" href="<?= $this->url('index',['action'=> 'removefromcart','id' => $a->_id]) ?>">Retirer</a></td>
+                <td><a class="cursor-ptr" href="<?= $this->url('cart',['action'=> 'removefromcart','id' => $a->_id]) ?>">Retirer</a></td>
 
             </tr>
         <?php endforeach;

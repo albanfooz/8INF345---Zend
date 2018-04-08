@@ -10,12 +10,12 @@ $this->headTitle($title);
     de votre panier ?
 </p>
 <?php
-$url = $this->url('index', array(
+$url = $this->url('cart', array(
     'action' => 'removefromcart',
     'id'     => $this->id,
 ));
 ?>
-<form action="/removefromcart/<?= $product->_id ?>" method="post">
+<form action="/cart/removefromcart/<?= $product->_id ?>" method="post">
     <div>
         <input type="hidden" name="id" value="<?php echo (int) $product->_id; ?>" />
         <input type="submit" name="del" value="Yes" />

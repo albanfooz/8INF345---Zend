@@ -35,13 +35,13 @@ return [
             'cart' => [
                 'type' => Segment::class,
                 'options' => [
-                    'route' => '/cart',
+                    'route' => '/cart/[:action[/:id]]',
                     'constraints' => [
                         'action' => '[a-zA-Z][a-zA-Z]*',
                         'id' => '[0-9]*',
                     ],
                     'defaults' => [
-                        'controller' => Controller\IndexController::class,
+                        'controller' => Controller\CartController::class,
                         'action' => 'cart',
                     ],
                 ],
@@ -54,15 +54,20 @@ return [
         ],
         'controllers' => [
             Controller\IndexController::class => [
-                ['actions' => ['index', 'edit', 'delete', 'create', 'addtocart', 'cart', 'removefromcart', 'paycart'], 'allow' => '*'],
+                ['actions' => ['index', 'edit', 'delete', 'create', 'addtocart'], 'allow' => '*'],
                 ['actions' => ['index'], 'allow' => '*'],
                 ['actions' => ['addtocart'], 'allow' => '*'],
-                ['actions' => ['removefromcart'], 'allow' => '*'],
-                ['actions' => ['cart'], 'allow' => '*'],
                 ['actions' => ['admin'], 'allow' => '@'],
                 ['actions' => ['edit'], 'allow' => '@'],
                 ['actions' => ['delete'], 'allow' => '@'],
                 ['actions' => ['create'], 'allow' => '@'],
+
+
+            ],
+            Controller\CartController::class => [
+                ['actions' => ['cart', 'removefromcart', 'paycart'], 'allow' => '*'],
+                ['actions' => ['removefromcart'], 'allow' => '*'],
+                ['actions' => ['cart'], 'allow' => '*'],
                 ['actions' => ['paycart'], 'allow' => '*']
 
 
@@ -82,6 +87,8 @@ return [
     'controllers' => [
         'factories' => [
             Controller\IndexController::class => Controller\Factories\IndexControllerFactory::class,
+            Controller\CartController::class => Controller\Factories\CartControllerFactory::class,
+
         ],
     ],
     'view_helpers' => [

@@ -34,13 +34,6 @@ class IndexController extends AbstractActionController
     {
     }
 
-    public function cartAction()
-    {
-        $cartProductsIds = $this->_cartTable->getUserCart();
-        return new ViewModel([
-            'products' => $this->_table->getAllCartProducts($cartProductsIds),
-        ]);
-    }
 
     public function editAction()
     {
@@ -178,80 +171,6 @@ class IndexController extends AbstractActionController
                 'form' => $form
             ));
         }
-
-
-    }
-
-    public function removefromcartAction()
-    {
-        {
-            $id = (int)$this->params()->fromRoute('id', -1);
-            if ($id < 1) {
-                $this->getResponse()->setStatusCode(404);
-                return;
-            }
-
-            $product = $this->_table->find($id);
-
-            if ($product == null) {
-                $this->getResponse()->setStatusCode(404);
-
-                return;
-            }
-
-            $form = new AuctionEditForm($product);
-
-            if ($this->getRequest()->isPost()) {
-                $data = [
-                    'idProduct' => $id,
-                    'username' => $_SESSION['username'], 1
-                ];
-                $cartItem = new CartItem();
-                $cartItem->exchangeArray($data);
-                $this->_cartTable->delete($cartItem);
-
-                return $this->redirect()->toRoute('index');
-            }
-
-            return new ViewModel(array(
-                'product' => $product,
-                'form' => $form
-            ));
-        }
-    }
-
-    public function paycartAction()
-    {
-
-
-        $form = new AuctionEditForm(new Product());
-
-        $success = rand(0, 1);
-        if ($this->getRequest()->isPost()) {
-            if ($success) {
-                $this->_cartTable->payCart();
-            } else {
-                echo 'mdr fail';
-            }
-
-        }
-
-        return new ViewModel(array(
-            'success' => $success,
-            'orderId' => $this->generateOrderId(),
-            'form' => $form
-        ));
-
-    }
-
-    function generateOrderId($length = 10) {
-        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-        $charactersLength = strlen($characters);
-        $randomString = '';
-        for ($i = 0; $i < $length; $i++) {
-            $randomString .= $characters[rand(0, $charactersLength - 1)];
-        }
-        return $randomString;
     }
 }
 
