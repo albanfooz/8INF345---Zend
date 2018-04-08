@@ -1,30 +1,30 @@
+<header>
+</header>
 
-<div id="MainContent" class="container">
+<main>
+    <td><a class="cursor-ptr" href="<?= $this->url('index',['action'=> 'create']) ?>">Nouveau produit</a></td>
 
-<div id="modal"></div>
-<div id="productList" class="row" style="width: 100%">
+    <table class="datatable">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nom</th>
+                <th>Prix</th>
+                <th>Description</th>
+                <th>&nbsp;</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach ($products as $a) : ?>
+                <tr>
+                    <td><?= $this->escapeHtml($a->_id) ?></td>
+                    <td><?= $this->escapeHtml($a->_name) ?></td>
+                    <td><?= $this->escapeHtml($a->_price) ?></td>
+                    <td><?= $this->escapeHtml($a->_description) ?></td>
+                    <td><a class="cursor-ptr" href="<?= $this->url('index',['action'=> 'addtocart','id' => $a->_id]) ?>">Ajouter au panier</a></td>
 
-    <div *ngFor="let product of curentProducts" id="product{{product.id}}" class="card col-sm-4 productBox"
-         style="text-align:center;">
-        <div class="card-body">
-            <h4 class="card-title"> {{product.name }} </h4>
-            <img class="card-img-top" src="http://lorempixel.com/200/200" style="height:18%; width:auto;"
-                 alt="Card image">
-            <div> {{product.price}} $CA<br/></div>
-            <button  routerLink="/details/{{product.id}}" routerLinkActive="active" type="button" class="btPlus btPlus{{product.id}} btn btn-info"><i
-                    class="material-icons">zoom_in</i>
-            </button>
-            <button (click)="addToCart(product)" type="button" class="btAddToCart{{product.id}} btn btn-success"><i
-                    class="material-icons">add_shopping_cart</i>
-            </button>
-        </div>
-    </div>
-    <br/>
-</div>
-<div id="pageSelection">
-    <button *ngFor="let nbBt of paginationButtons()" (click)="setCurentPage(nbBt * 9)" type="button"
-            id="btnPageProduct" class="btn">{{nbBt}}
-    </button>
-</div>
-
-</div>
+                </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
+</main>

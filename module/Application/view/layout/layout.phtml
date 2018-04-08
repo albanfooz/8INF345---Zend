@@ -3,7 +3,7 @@
 <html lang="en">
     <head>
         <meta charset="utf-8">
-        <?= $this->headTitle('Laboratoire 3 - The Products Website')->setSeparator(' - ')->setAutoEscape(false) ?>
+        <?= $this->headTitle('ZF Skeleton Application')->setSeparator(' - ')->setAutoEscape(false) ?>
 
         <?= $this->headMeta()
             ->appendName('viewport', 'width=device-width, initial-scale=1.0')
@@ -11,11 +11,10 @@
         ?>
 
         <!-- Le styles -->
-        <?= $this->headLink(['rel' => 'shortcut icon', 'type' => 'image/png', 'href' => $this->basePath() . '/img/favicon.png']) // !??? why o why?
+        <?= $this->headLink(['rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->basePath() . '/img/favicon.ico'])
             ->prependStylesheet($this->basePath('css/style.css'))
             ->prependStylesheet($this->basePath('css/bootstrap-theme.min.css'))
             ->prependStylesheet($this->basePath('css/bootstrap.min.css'))
-            ->prependStylesheet($this->basePath('css/home.css'))
         ?>
 
         <!-- Scripts -->
@@ -23,37 +22,22 @@
             ->prependFile($this->basePath('js/bootstrap.min.js'))
             ->prependFile($this->basePath('js/jquery-3.1.0.min.js'))
         ?>
-        <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
-        rel="stylesheet">
     </head>
     <body>
-        <!-- Navigation -->
-        <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
-        <a id="home" class="navbar-brand" href="#" routerLink="/home" routerLinkActive="active">THE PRODUCTS WEBSITE</a>
+        <!-- Navigation bar -->
+        <?php
+        // Check if the activeMenuItemId passed to layout view model
+        // and if so, use it for setting active navbar item.
+        if (isset($activeMenuItemId)) {
+            $this->mainMenu()->setActiveItemId($activeMenuItemId);
+        }
 
-        <ul class="navbar-nav">
-            <li *ngIf="!isLoggedIn()" class="nav-item" id="panierNav">
-                <a class="nav-link" href="#" routerLink="/panier" routerLinkActive="active"><i class="material-icons">shopping_cart</i>Panier
-                </a>
-            </li>
-            <li *ngIf="!isLoggedIn()" class="nav-item" id="connectionNav">
-                <a routerLink="/login" routerLinkActive="active" class="nav-link" href="#"><i class="material-icons">account_box</i>Connexion</a>
-            </li>
-            <li *ngIf="isLoggedIn()" class="nav-item" id="adminNav">
-                <a routerLink="/admin" routerLinkActive="active" class="nav-link" href="#"><i class="material-icons">settings</i>Admin</a>
-            </li>
-            <li *ngIf="isLoggedIn()" class="nav-item" id="disconectionNav">
-                <a class="nav-link" href="#"><i class="material-icons">account_box</i>Deconnexion</a>
-            </li>
-        </ul>
-    </nav>
-        <div class="container">
+        // Render the navbar
+        echo $this->mainMenu()->render();
+        ?>
+        <div class="right-part">
             <?= $this->content ?>
-            <hr>
-            <footer>
-                <p>&copy; <?= date('Y') ?> by Axel Houlès - Alban Fourfooz. All rights reserved, JK.</p>
-            </footer>
+            <?= $this->inlineScript() ?>
         </div>
-        <?= $this->inlineScript() ?>
     </body>
 </html>

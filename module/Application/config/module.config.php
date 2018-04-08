@@ -10,51 +10,87 @@ namespace Application;
 use Zend\Router\Http\Literal;
 use Zend\Router\Http\Segment;
 use Zend\ServiceManager\Factory\InvokableFactory;
+use Zend\Db\Adapter\AdapterInterface;
+use Zend\Db\ResultSet\ResultSet;
+use Zend\Db\TableGateway\TableGateway;
+use Zend\ModuleManager\Feature\ConfigProviderInterface;
 
 return [
     'router' => [
         'routes' => [
-            'home' => [
-                'type' => Literal::class,
+            'index' => [
+                'type' => Segment::class,
                 'options' => [
-                    'route'    => '/',
+                    'route' => '/[:action[/:id]]',
+                    'constraints' => [
+                        'action' => '[a-zA-Z][a-zA-Z]*',
+                        'id' => '[0-9]*',
+                    ],
                     'defaults' => [
                         'controller' => Controller\IndexController::class,
-                        'action'     => 'index',
+                        'action' => 'index',
                     ],
                 ],
+            ]
+        ],
+    ],
+    'access_filter' => [
+        'options' => [
+            'mode' => 'restrictive'
+        ],
+        'controllers' => [
+            Controller\IndexController::class => [
+                ['actions' => ['index', 'edit', 'delete', 'create', 'addtocart'], 'allow' => '*'],
+                ['actions' => ['index'], 'allow' => '*'],
+                ['actions' => ['addtocart'], 'allow' => '*'],
+                ['actions' => ['admin'], 'allow' => '@'],
+                ['actions' => ['edit'], 'allow' => '@'],
+                ['actions' => ['delete'], 'allow' => '@'],
+                ['actions' => ['create'], 'allow' => '@']
+
+
             ],
-            'application' => [
-                'type'    => Segment::class,
-                'options' => [
-                    'route'    => '/application[/:action]',
-                    'defaults' => [
-                        'controller' => Controller\IndexController::class,
-                        'action'     => 'index',
-                    ],
-                ],
-            ],
+        ]
+    ],
+    'service_manager' => [
+        'factories' => [
+            Services\AuctionTable::class => Services\Factories\AuctionTableFactory::class,
+            Services\AuctionTableGateway::class => Services\Factories\AuctionTableGatewayFactory::class,
+            Services\NavManager::class => Services\Factories\NavManagerFactory::class,
+            Services\CartTable::class => Services\Factories\CartTableFactory::class,
+            Services\CartTableGateway::class => Services\Factories\CartTableGatewayFactory::class,
+
         ],
     ],
     'controllers' => [
         'factories' => [
-            Controller\IndexController::class => InvokableFactory::class,
+            Controller\IndexController::class => Controller\Factories\IndexControllerFactory::class,
+        ],
+    ],
+    'view_helpers' => [
+        'factories' => [
+            View\Helper\Menu::class => View\Helper\Factory\MenuFactory::class,
+        ],
+        'aliases' => [
+            'mainMenu' => View\Helper\Menu::class
         ],
     ],
     'view_manager' => [
         'display_not_found_reason' => true,
-        'display_exceptions'       => true,
-        'doctype'                  => 'HTML5',
-        'not_found_template'       => 'error/404',
-        'exception_template'       => 'error/index',
+        'display_exceptions' => true,
+        'doctype' => 'HTML5',
+        'not_found_template' => 'error/404',
+        'exception_template' => 'error/index',
         'template_map' => [
-            'layout/layout'           => __DIR__ . '/../view/layout/layout.phtml',
-            'application/index/index' => __DIR__ . '/../view/application/index/index.phtml',
-            'error/404'               => __DIR__ . '/../view/error/404.phtml',
-            'error/index'             => __DIR__ . '/../view/error/index.phtml',
+            'layout/layout' => __DIR__ . '/../view/layout/layout.phtml',
+            'error/404' => __DIR__ . '/../view/error/404.phtml',
+            'error/index' => __DIR__ . '/../view/error/index.phtml',
         ],
         'template_path_stack' => [
             __DIR__ . '/../view',
         ],
+        'strategies' => [
+            'ViewJsonStrategy',
+        ]
     ],
 ];

@@ -1,9 +1,11 @@
 <?php
 use Zend\Mvc\Application;
 ?>
+<header>
 <h1>A 404 error occurred</h1>
 <h2><?= $this->message ?></h2>
-
+</header>
+<main>
 <?php if (! empty($this->reason)) :
     switch ($this->reason) {
         case Application::ERROR_CONTROLLER_CANNOT_DISPATCH:
@@ -103,3 +105,4 @@ use Zend\Mvc\Application;
 <h3>No Exception available</h3>
     <?php endif ?>
 <?php endif ?>
+</main>

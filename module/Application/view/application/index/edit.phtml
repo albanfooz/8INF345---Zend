@@ -1,0 +1,75 @@
+<?php
+$this->headTitle('Edit Product');
+?>
+<header>
+</header>
+<main>
+<?php
+$form->get('name')->setAttributes([
+    'class'=>'form-control', 
+    'placeholder'=>'Nom'
+    ]);
+
+$form->get('price')->setAttributes([
+    'class'=>'form-control', 
+    'placeholder'=>'30'
+    ]);
+
+$form->get('description')->setAttributes([
+    'class'=>'form-control', 
+    'placeholder'=>'Je suis un beau produit'
+    ]);
+
+$form->get('submit')
+        ->setAttributes(['class'=>'btn btn-primary'])
+        ->setValue('Save');
+
+$form->prepare();
+?>
+
+<h1>Edit Product <?= $this->escapeHtml($product->_id) ?></h1>
+
+<table class="datatable">
+<tbody>
+<?= $this->form()->openTag($form); ?>
+        
+
+        <tr>
+            <td>
+            <?= $this->formLabel($form->get('name')); ?>
+            </td>  
+            <td>
+            <?= $this->formElement($form->get('name')); ?>
+            <?= $this->formElementErrors($form->get('name')); ?>
+            </td>         
+        </tr>
+
+        <tr>
+            <td>
+            <?= $this->formLabel($form->get('price')); ?>
+            </td>  
+            <td>
+            <?= $this->formElement($form->get('price')); ?>
+            <?= $this->formElementErrors($form->get('price')); ?>
+            </td>         
+        </tr>
+
+        <tr>
+            <td>
+            <?= $this->formLabel($form->get('description')); ?>
+            </td>  
+            <td>
+            <?= $this->formElement($form->get('description')); ?>
+            <?= $this->formElementErrors($form->get('description')); ?>
+            </td>         
+        </tr>
+        <tr>
+            <td>
+            <?= $this->formElement($form->get('submit')); ?>
+            </td>         
+        </tr>
+        <?= $this->form()->closeTag(); ?>
+    </tbody>    
+</table>   
+
+</main>

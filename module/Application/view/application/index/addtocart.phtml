@@ -1,0 +1,23 @@
+<?php
+
+$title = 'Delete product';
+$this->headTitle($title);
+?>
+<h1><?php echo $this->escapeHtml($title); ?></h1>
+
+<p>Ajouter ce produit au panier ?
+    <?php echo $this->escapeHtml($product->_name); ?> ?
+</p>
+<?php
+$url = $this->url('index', array(
+    'action' => 'addtocart',
+    'id'     => $this->id,
+));
+?>
+<form action="/addtocart/<?= $product->_id ?>" method="post">
+    <div>
+        <input type="hidden" name="id" value="<?php echo (int) $product->_id; ?>" />
+        <input type="submit" name="del" value="Yes" />
+        <input type="submit" name="del" value="No" />
+    </div>
+</form>
